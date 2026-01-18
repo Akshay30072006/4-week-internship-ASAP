@@ -1,9 +1,10 @@
 # -----------------------------
 # Imports
 # -----------------------------
-from groq import Groq
+import os
 import re
 import streamlit as st
+from groq import Groq
 
 # -----------------------------
 # Backend: LLM Client
@@ -78,9 +79,14 @@ class StudyBuddyBackend:
 
 
 # -----------------------------
-# Initialize Backend
+# Load API Key (SAFE WAY)
 # -----------------------------
-API_KEY = "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"   # Replace with your Groq API key
+API_KEY = os.getenv("GROQ_API_KEY")
+
+if not API_KEY:
+    st.error("❌ GROQ_API_KEY not found. Please set it in environment variables.")
+    st.stop()
+
 backend = StudyBuddyBackend(API_KEY)
 
 
